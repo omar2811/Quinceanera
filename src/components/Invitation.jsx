@@ -109,7 +109,7 @@ function downloadICS() {
     "DTSTART:20261220T010000Z",
     "DTEND:20261220T080000Z",
     "SUMMARY:XV Años · Melissa Guadalupe Gil Arcos",
-    "DESCRIPTION:Misa 7:00 p.m. en Parroquia San Juan Bautista. Recepción 7:30 p.m. en Salón de eventos Gomzav. Código de vestimenta: Noche 100 años Disney (Celebración para adultos).",
+    "DESCRIPTION:Misa 7:00 p.m. en Parroquia San Juan Bautista. Recepción 8:30 p.m. en Salón de eventos Gomzav. Código de vestimenta: Noche 100 años Disney (Celebración para adultos).",
     "LOCATION:Salón de eventos Gomzav, Prol. Carlos Pellicer Camara 105-primer piso, 86168 Villahermosa, Tab.",
     "END:VEVENT",
     "END:VCALENDAR",
@@ -255,35 +255,6 @@ export function Invitation() {
         </section>
 
 
-        <section className="map-section light-paper-section" id="ubicacion">
-          <div className="map-copy" data-reveal>
-            <p className="kicker">Recepción · 7:30 p.m.</p>
-            <p>Salón de eventos Gomzav</p>
-            <span>Prol. Carlos Pellicer Camara 105-primer piso, 86168 Villahermosa, Tab.</span>
-            <a
-              className="map-link"
-              href={salonMapUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Cómo llegar
-            </a>
-          </div>
-          <a
-            className="map-image-link gala-photo-frame"
-            href={salonMapUrl}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Ver ubicación de Salón de eventos Gomzav en Google Maps"
-            data-reveal
-          >
-            <img
-              src={salonGomzav}
-              alt="Fachada del Salón de eventos Gomzav"
-              loading="lazy"
-            />
-          </a>
-        </section>
 
         <section className="map-section dark-paper-section" id="misa">
           <div className="map-copy" data-reveal>
@@ -315,6 +286,35 @@ export function Invitation() {
           </a>
         </section>
 
+        <section className="map-section light-paper-section" id="ubicacion">
+          <div className="map-copy" data-reveal>
+            <p className="kicker">Recepción · 8:30 p.m.</p>
+            <p>Salón de eventos Gomzav</p>
+            <span>Prol. Carlos Pellicer Camara 105-primer piso, 86168 Villahermosa, Tab.</span>
+            <a
+              className="map-link"
+              href={salonMapUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Cómo llegar
+            </a>
+          </div>
+          <a
+            className="map-image-link gala-photo-frame"
+            href={salonMapUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Ver ubicación de Salón de eventos Gomzav en Google Maps"
+            data-reveal
+          >
+            <img
+              src={salonGomzav}
+              alt="Fachada del Salón de eventos Gomzav"
+              loading="lazy"
+            />
+          </a>
+        </section>
         <section className="gallery-section light-paper-section" id="vestimenta">
           <p className="kicker" data-reveal>Referencias de</p>
           <h2 data-reveal>Vestimenta</h2>
