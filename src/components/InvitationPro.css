@@ -1,0 +1,96 @@
+/* === Carrusel de bienvenida === */
+#bienvenida .mySwiper {
+  width: 100%;
+  max-width: 440px;
+  margin: 16px auto 0;
+  padding-bottom: 36px;
+}
+
+#bienvenida .swiper-wrapper {
+  align-items: center;
+}
+
+#bienvenida .swiper-slide {
+  width: 100% !important;
+  height: auto !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#bienvenida .swiper-slide img {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
+  border-radius: 16px;
+  display: block;
+}
+
+#bienvenida .swiper-pagination-bullet-active {
+  background: #9e7730;
+}
+
+/* === Muestras de paleta de colores con relieve de gala === */
+.gala-swatches {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.gala-swatch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 15px 7px 8px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 240, 224, 0.82));
+  border: 1px solid rgba(184, 145, 70, 0.42);
+  box-shadow:
+    0 6px 16px rgba(24, 20, 28, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.gala-swatch:hover {
+  transform: translateY(-3px);
+  border-color: rgba(184, 145, 70, 0.85);
+  box-shadow:
+    0 10px 22px rgba(184, 145, 70, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.gala-swatch-dot {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(214, 178, 103, 0.75);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.35),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Brillo satinado tipo perla/seda sobre cada muestra */
+.gala-swatch-dot::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  width: 8px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  transform: rotate(-25deg);
+}
+
+.gala-swatch small {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #2b2218;
+}

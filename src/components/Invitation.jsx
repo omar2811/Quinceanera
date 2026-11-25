@@ -1,86 +1,91 @@
-import { useEffect, useState } from "react";
-import { Check, X, Baby, User, UserPlus } from "lucide-react";
-import {
-  buildRsvpPayload,
-  submitRsvpPayload,
-  validateRsvpPayload,
-} from "../services/rsvpService";
+import { useEffect, useRef, useState } from "react";
 
-import quinceanera1 from "../assets/img/quinceanera-1.jpg";
-import quinceanera2 from "../assets/img/quinceanera-2.jpg";
-import quinceanera3 from "../assets/img/quinceanera-3.jpg";
-import quinceanera4 from "../assets/img/quinceanera-4.jpg";
-import quinceanera5 from "../assets/img/quinceanera-5.jpg";
-import quinceanera6 from "../assets/img/quinceanera-6.jpg";
+import quinceanera1 from "../assets/img/melissa/Melissa - SESIÓN-6.jpg";
+import quinceanera2 from "../assets/img/melissa/Melissa - SESIÓN-14.jpg";
+import quinceanera3 from "../assets/img/melissa/Melissa - SESIÓN-32.jpg";
+import quinceanera4 from "../assets/img/melissa/Melissa - SESIÓN-39.jpg";
 
-import dress1 from "../assets/img/dress-1.jpg";
-import dress2 from "../assets/img/dress-2.jpg";
-import dress3 from "../assets/img/dress-3.jpg";
-import dress4 from "../assets/img/dress-4.jpg";
+import dressCodeGuide from "../assets/img/dress-code-guide.jpg";
+import salonGomzav from "../assets/img/salon-gomzav.jpg";
+import parroquiaImg from "../assets/img/parroquia-san-juan-bautista.jpg";
 
 import floralOrnament from "../assets/img/floral-ornament.webp";
 import bowOrnament from "../assets/img/bow-ornament.webp";
 
-import stars from "../assets/vid/stars.mp4";
-import starsPoster from "../assets/img/stars-poster.webp";
+import starsPoster from "../assets/img/image.png";
+import "./InvitationPro.css";
 
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import { Pagination, Keyboard } from "swiper/modules";
 
-// Import Swiper required modules
-import { Pagination, Mousewheel, Keyboard } from "swiper/modules";
-
-const quincesDate = new Date("2026-12-11T19:00:00-05:00");
+const quincesDate = new Date("2026-12-19T19:00:00-06:00");
 
 const quinceaneraGallery = [
   { id: 1, src: quinceanera1, alt: "Quinceañera con mano en la cintura" },
   { id: 2, src: quinceanera2, alt: "Quinceañera tocando su cabello con ambas manos" },
   { id: 3, src: quinceanera3, alt: "Quinceañera sentada" },
   { id: 4, src: quinceanera4, alt: "Quinceañera con mano arriba" },
-  { id: 5, src: quinceanera5, alt: "Quinceañera con mano en la cintura y cabeza" },
-  { id: 6, src: quinceanera6, alt: "Quinceañera tocando su cabello con una mano" },
 ];
 
-const dressCodeGallery = [
-  { id: 1, src: dress1, alt: "Referencia de vestimenta femenina 1" },
-  { id: 2, src: dress2, alt: "Referencia de vestimenta masculina 1" },
-  { id: 3, src: dress3, alt: "Referencia de vestimenta femenina 2" },
-  { id: 4, src: dress4, alt: "Referencia de vestimenta masculina 2" },
+const suggestedColors = [
+  {
+    name: "Vino / Borgoña",
+    hex: "#5B1324",
+    gradient: "linear-gradient(135deg, #8a233b 0%, #5B1324 55%, #2e0610 100%)",
+  },
+  {
+    name: "Verde Esmeralda",
+    hex: "#174231",
+    gradient: "linear-gradient(135deg, #2b6e53 0%, #174231 55%, #091f16 100%)",
+  },
+  {
+    name: "Ciruela / Berenjena",
+    hex: "#431D3B",
+    gradient: "linear-gradient(135deg, #6e3362 0%, #431D3B 55%, #210b1c 100%)",
+  },
+  {
+    name: "Negro Gala",
+    hex: "#18181B",
+    gradient: "linear-gradient(135deg, #3f3f46 0%, #18181B 55%, #09090b 100%)",
+  },
+  {
+    name: "Azul Marino (Ellos)",
+    hex: "#1B2945",
+    gradient: "linear-gradient(135deg, #344d7e 0%, #1B2945 55%, #0c1424 100%)",
+  },
 ];
 
-const contactMessage =
-  "¡Hola! ¿Podrías ayudarme con indicaciones para llegar a la celebración de los 15 años? 😅🙏";
+const sparkles = Array.from({ length: 16 }, (_, i) => ({
+  id: i,
+  left: `${(i * 19 + 7) % 95}%`,
+  top: `${(i * 29 + 11) % 90}%`,
+  delay: `${(i % 5) * 0.85}s`,
+  duration: `${4.2 + (i % 4)}s`,
+  size: i % 3 === 0 ? 5 : 3,
+}));
 
-const contactWhatsAppUrl =
-  `https://wa.me/573133422193?text=${encodeURIComponent(contactMessage)}`;
+const salonMapUrl = "https://maps.app.goo.gl/PsJoYP4EkPpuZ1te9?g_st=ic";
+const misaMapUrl = "https://maps.app.goo.gl/3TNwLSvXFtRn56946";
 
-const mapUrlReception =
-  "https://www.google.com/maps/search/?api=1&query=Celebraciones+Argento+Cristal,+Envigado,+Antioquia";
-
-const mapEmbedUrlReception =
-  "https://www.google.com/maps?q=Celebraciones%20Argento%20Cristal%2C%20Envigado%2C%20Antioquia&t=k&output=embed";
+const whatsappPhone = "529931661341";
+const whatsappMessage = encodeURIComponent(
+  "¡Hola! Quiero confirmar mi asistencia a los XV años de Melissa Guadalupe el 19 de diciembre de 2026. "
+);
+const whatsappRsvpUrl = `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
 
 const swiperSettings = {
-  slidesPerView: "auto",
+  slidesPerView: 1,
   spaceBetween: 16,
   centeredSlides: true,
-  centeredSlidesBounds: true,
-  centerInsufficientSlides: true,
-  speed: 600,
+  speed: 500,
   grabCursor: true,
-  resistance: true,
-  resistanceRatio: 0.5,
-  longSwipesRatio: 0.25,
-  watchSlidesProgress: true,
   simulateTouch: true,
-  mousewheel: { forceToAxis: true },
+  touchRatio: 1,
   pagination: { clickable: true },
   keyboard: { enabled: true },
-  modules: [Pagination, Mousewheel, Keyboard],
+  modules: [Pagination, Keyboard],
   className: "mySwiper",
 };
 
@@ -95,61 +100,91 @@ function getCountdown() {
   ];
 }
 
+function downloadICS() {
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Invitacion XV//Melissa Guadalupe//ES",
+    "BEGIN:VEVENT",
+    "DTSTART:20261220T010000Z",
+    "DTEND:20261220T080000Z",
+    "SUMMARY:XV Años · Melissa Guadalupe Gil Arcos",
+    "DESCRIPTION:Misa 7:00 p.m. en Parroquia San Juan Bautista. Recepción 7:30 p.m. en Salón de eventos Gomzav. Código de vestimenta: Noche 100 años Disney (Celebración para adultos).",
+    "LOCATION:Salón de eventos Gomzav, Prol. Carlos Pellicer Camara 105-primer piso, 86168 Villahermosa, Tab.",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "XV-Melissa-Guadalupe.ics";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export function Invitation() {
   const [countdown, setCountdown] = useState(getCountdown);
-  const [rsvpSent, setRsvpSent] = useState(false);
-  const [rsvpError, setRsvpError] = useState("");
-  const [rsvpSending, setRsvpSending] = useState(false);
-  const [rsvpData, setRsvpData] = useState(null);
-  const [attendance, setAttendance] = useState("yes");
-  const [ageRange, setAgeRange] = useState("adult");
+  const rootRef = useRef(null);
 
   useEffect(() => {
     const intervalId = setInterval(() => setCountdown(getCountdown()), 1000);
     return () => clearInterval(intervalId);
   }, []);
 
-  async function submitRsvp(event) {
-    event.preventDefault();
-    // Keep a reference to the form element: event.currentTarget becomes null
-    // after the first await, so it cannot be used for reset() later on.
-    const formElement = event.currentTarget;
-    const payload = buildRsvpPayload(new FormData(formElement), attendance);
-    const validationError = validateRsvpPayload(payload);
+  useEffect(() => {
+    const container = rootRef.current;
+    if (!container) return;
 
-    if (validationError) {
-      setRsvpError(validationError);
-      return;
-    }
+    const targets = container.querySelectorAll("[data-reveal]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
 
-    setRsvpSending(true);
-    setRsvpError("");
-
-    try {
-      await submitRsvpPayload(payload);
-
-      setRsvpData(payload);
-
-      formElement.reset();
-      setAttendance("yes");
-      setAgeRange("adult");
-      setRsvpSent(true);
-    } catch (error) {
-      console.error("No se pudo registrar el RSVP:", error);
-      setRsvpError("No pudimos registrar tu respuesta. Inténtalo nuevamente.");
-    } finally {
-      setRsvpSending(false);
-    }
-  }
+    targets.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <>
-      <main>
-        <section className="gallery-section light-paper-section" id="bienvenida">
-          <p className="kicker">Celebremos juntos mis</p>
-          <h2>¡Quince Años!</h2>
+    <div ref={rootRef} className="invitation-pro-shell">
+      <div className="gala-sparkles-layer" aria-hidden="true">
+        {sparkles.map((s) => (
+          <span
+            key={s.id}
+            className="gala-sparkle"
+            style={{
+              left: s.left,
+              top: s.top,
+              width: `${s.size}px`,
+              height: `${s.size}px`,
+              animationDelay: s.delay,
+              animationDuration: s.duration,
+            }}
+          />
+        ))}
+      </div>
 
-          <p className="lead">
+
+
+      <main>
+        <section className="gallery-section light-paper-section hero-gala-section" id="bienvenida">
+          <div className="royal-crest" data-reveal>
+            <span>XV</span>
+          </div>
+          <p className="kicker" data-reveal>Celebremos juntos los XV años de</p>
+          <h2 className="gala-title" data-reveal>Melissa Guadalupe Gil Arcos</h2>
+          <div className="gold-hairline" data-reveal />
+
+          <p className="lead" data-reveal>
             Con mucha ilusión celebro este momento tan especial y deseo compartir
             esta noche inolvidable con quienes llenan mi vida de alegría.
           </p>
@@ -157,258 +192,243 @@ export function Invitation() {
           <Swiper {...swiperSettings}>
             {quinceaneraGallery.map((image) => (
               <SwiperSlide key={`quinceanera-img-${image.id}`}>
-                <img src={image.src} alt={image.alt} />
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="zoomable-photo"
+                />
               </SwiperSlide>
             ))}
           </Swiper>
         </section>
 
+        <section className="details-section dark-paper-section" id="padres-padrinos">
+          <div className="ornament ornament-float" data-reveal>
+            <img src={bowOrnament} width={88} height="auto" loading="lazy" alt="" />
+          </div>
+          <p className="kicker" data-reveal>Mis XV Años</p>
+          <h2 data-reveal>Con la bendición de Dios y de mis:</h2>
+          <div className="gold-hairline" data-reveal />
+
+          <div className="details-grid">
+            <article className="gala-card" data-reveal>
+              <h3>Papás</h3>
+              <p>
+                <b>Sr. Candido Garcia Benitez</b> <br />
+                <b>Sra. Jannet Arcos Garcia</b>
+              </p>
+            </article>
+            <article className="gala-card" data-reveal>
+              <h3>Padrinos de Bendición</h3>
+              <p>
+                <b>Ing. Omar Alberto Flores Reyes</b> <br />
+
+                <b>Dra. Karen Nayely Arcos Pineda</b>
+              </p>
+            </article>
+            <article className="gala-card" data-reveal>
+              <h3>Padrinos de Brindis</h3>
+              <p>
+                <b>Ing. Paul Horacio Tinoco Agurto</b><br />
+                <b>Sra. Maritza Arcos Garcia</b>
+              </p>
+            </article>
+          </div>
+        </section>
+
         <section className="countdown-section" id="contador">
-          <p className="kicker light">La espera comienza</p>
-          <h2>Faltan solamente</h2>
-          <div className="countdown">
+          <p className="kicker light" data-reveal>La espera comienza</p>
+          <h2 data-reveal>Faltan solamente</h2>
+          <div className="countdown" data-reveal>
             {countdown.map(([label, value]) => (
-              <div className="countdown-item" key={label}>
+              <div className="countdown-item gala-counter-box" key={label}>
                 <strong>{String(value).padStart(2, "0")}</strong>
                 <span>{label}</span>
               </div>
             ))}
           </div>
-        </section>
-
-        <section className="details-section dark-paper-section" id="detalles">
-          <p className="kicker">Guarda la fecha</p>
-          <h2>El gran día</h2>
-          <div className="details-grid">
-            <article>
-              <h3>Cuándo</h3>
-              <p>7 p.m.<br /><b>11 de diciembre de 2026</b></p>
-              <a href="#contador" rel="noreferrer">Ver contador</a>
-            </article>
-            <article>
-              <h3>Dónde</h3>
-              <p>Salón de Eventos<br /><b>Celebraciones Argento Cristal</b></p>
-              <a href="#ubicacion" rel="noreferrer">Ver ubicación</a>
-            </article>
-            <article>
-              <h3>Vestuario</h3>
-              <p>Noche y Estrellas<br /><b>Código de vestuario</b></p>
-              <a href="#vestimenta" rel="noreferrer">Ver referencias</a>
-            </article>
+          <div className="calendar-cta-wrap" data-reveal>
+            <button type="button" className="gala-outline-btn" onClick={downloadICS}>
+              Guardar fecha en mi calendario
+            </button>
           </div>
         </section>
+
 
         <section className="map-section light-paper-section" id="ubicacion">
-          <div className="map-copy">
-            <p className="kicker">Cómo llegar</p>
-            <p>Celebraciones Argento Cristal</p>
-            <span>Carrera 81 av 80 # 34a 137, Medellín, Antioquia</span>
-            <a className="map-link" href={mapUrlReception} target="_blank" rel="noreferrer">Abrir en Google Maps</a>
+          <div className="map-copy" data-reveal>
+            <p className="kicker">Recepción · 7:30 p.m.</p>
+            <p>Salón de eventos Gomzav</p>
+            <span>Prol. Carlos Pellicer Camara 105-primer piso, 86168 Villahermosa, Tab.</span>
+            <a
+              className="map-link"
+              href={salonMapUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Cómo llegar
+            </a>
           </div>
-          <iframe
-            title="Mapa de Celebraciones Argento Cristal"
-            src={mapEmbedUrlReception}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
+          <a
+            className="map-image-link gala-photo-frame"
+            href={salonMapUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Ver ubicación de Salón de eventos Gomzav en Google Maps"
+            data-reveal
+          >
+            <img
+              src={salonGomzav}
+              alt="Fachada del Salón de eventos Gomzav"
+              loading="lazy"
+            />
+          </a>
         </section>
 
-        <section className="schedule-section dark-paper-section" id="contacto">
-          <h3>¿Necesitas más ayuda para llegar?</h3>
-          <p>
-            Si requieres una orientación más específica o tienes algún imprevisto,
-            puedes contactarnos por este medio.
-          </p>
-          <a className="contact-link" href={contactWhatsAppUrl} target="_blank" rel="noreferrer">Contactar vía WhatsApp</a>
+        <section className="map-section dark-paper-section" id="misa">
+          <div className="map-copy" data-reveal>
+            <p className="kicker">Misa de Acción de Gracias · 7:00 p.m.</p>
+            <p>Parroquia San Juan Bautista</p>
+            <span>P.º Villahermosa 120, Plaza Villahermosa, 86179 Villahermosa, Tab.</span>
+            <a
+              className="map-link"
+              href={misaMapUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Abrir en Google Maps
+            </a>
+          </div>
+          <a
+            className="map-image-link gala-photo-frame"
+            href={misaMapUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Ver ubicación de Parroquia San Juan Bautista en Google Maps"
+            data-reveal
+          >
+            <img
+              src={parroquiaImg}
+              alt="Parroquia San Juan Bautista en Villahermosa"
+              loading="lazy"
+            />
+          </a>
         </section>
 
         <section className="gallery-section light-paper-section" id="vestimenta">
-          <p className="kicker">Referencias de</p>
-          <h2>Vestimenta</h2>
+          <p className="kicker" data-reveal>Referencias de</p>
+          <h2 data-reveal>Vestimenta</h2>
+          <div className="gold-hairline" data-reveal />
 
-          <p className="lead">
-            Para estar en armonía con el tema <i>Noche y Estrellas</i>, los invitamos a vestir un atuendo elegante y cómodo
-            en tonos blancos o azul claro. Agradecemos reservar los tonos dorados y oscuros exclusivamente para la familia.
+          <p className="lead" data-reveal>
+            Con mucho cariño les pedimos evitar las prendas estampadas y cualquier tonalidad en{" "}
+            <b>plata o azul</b>, ya que son colores reservados. Les invitamos a elegir un atuendo
+            acorde a la temática <i>100 años Disney</i> y a los tonos permitidos del evento.
           </p>
 
-          <Swiper {...swiperSettings}>
-            {dressCodeGallery.map((image) => (
-              <SwiperSlide key={`dress-code-img-${image.id}`}>
-                <img src={image.src} alt={image.alt} />
-              </SwiperSlide>
+          <div className="dress-showcase" data-reveal>
+            <img
+              src={dressCodeGuide}
+              alt="Referencias de vestimenta: Para Ellas y Para Ellos"
+              loading="lazy"
+            />
+          </div>
+
+          <div className="gala-swatches" data-reveal>
+            {suggestedColors.map((color) => (
+              <div className="gala-swatch" key={color.name}>
+                <span
+                  className="gala-swatch-dot"
+                  style={{ background: color.gradient }}
+                  aria-hidden="true"
+                />
+                <small>{color.name}</small>
+              </div>
             ))}
-          </Swiper>
+          </div>
         </section>
 
         <section className="quote-section">
-          <video
+          <img
             className="quote-video"
-            autoPlay
-            loop
-            muted
-            playsInline
-            poster={starsPoster}
-            preload="none"
+            src={starsPoster}
+            alt=""
             aria-hidden="true"
-          >
-            <source src={stars} type="video/mp4" />
-          </video>
+          />
 
-          <div className="quote-content">
+          <div className="quote-content" data-reveal>
             <p>“Haz de tu vida un sueño y de tu sueño una realidad.”</p>
             <span>- Antoine de Saint-Exupéry</span>
           </div>
         </section>
 
         <section className="gift-section light-paper-section" id="regalos">
-          <p className="kicker">Lazos en forma de</p>
-          <h2>Obsequios</h2>
-          <p className="lead">
+          <p className="kicker" data-reveal>Lazos en forma de</p>
+          <h2 data-reveal>Obsequios</h2>
+          <p className="lead" data-reveal>
             Tu presencia es lo más importante para nosotros. Si además deseas
             tener un detalle, hemos preparado una opción sencilla.
           </p>
-          <div className="gift-card">
-            <h3>Lluvia de sobres</h3>
-            <p>Encontrarás un espacio especial durante la celebración.</p>
+          <div className="gift-card gala-card" data-reveal>
+            <h3>Lluvia de sobres (Efectivo)</h3>
+            <p>
+              Si deseas hacernos un obsequio en efectivo, encontrarás un buzón
+              especial durante la celebración.
+            </p>
           </div>
+        </section>
+
+        <section className="gift-section dark-paper-section" id="solo-adultos">
+          <p className="kicker" data-reveal>Nota importante</p>
+          <h2 data-reveal>Celebración para adultos</h2>
+          <div className="gold-hairline" data-reveal />
+          <p className="lead" data-reveal>
+            Amamos la alegría y la magia que los pequeños aportan a nuestras vidas;
+            sin embargo, en esta ocasión hemos decidido reservar esta noche de
+            ensueño para una celebración entre adultos.
+          </p>
+          <p className="lead" data-reveal>
+            Gracias por su comprensión y por ser parte de esta historia tan especial.
+          </p>
         </section>
 
         <section className="rsvp-section" id="confirmar">
           <div className="rsvp-intro">
-            <h2>Confirmar asistencia</h2>
-            <p>Completa este formulario para ayudarnos a preparar cada detalle.</p>
-          </div>
-          {rsvpSent ? (
-            <div className="rsvp-confirmation">
-              <div className="ornament">
+            <h2 data-reveal>Confirmar asistencia</h2>
+            <p data-reveal>
+              Envíanos un mensaje por WhatsApp para confirmar tu lugar en la misa y la recepción.
+            </p>
+            <div className="rsvp-confirmation gala-card" data-reveal>
+              <div className="ornament ornament-float">
                 <img src={bowOrnament} width={88} height="auto" loading="lazy" alt="" />
               </div>
-              <h3>
-                {rsvpData?.attendance === "yes"
-                  ? "¡Gracias por confirmar!"
-                  : "¡Gracias por avisar!"}
-              </h3>
+              <h3>Melissa · 19 de diciembre de 2026</h3>
               <p>
-                {rsvpData?.attendance === "yes"
-                  ? "Hemos registrado tu respuesta. Nos alegra compartir este momento tan especial contigo."
-                  : "Hemos registrado tu respuesta. Aunque no puedas asistir, te tendremos presente."}
+                Al presionar el botón se abrirá WhatsApp con un mensaje listo para que indiques si asistirás.
               </p>
-              <button type="button" onClick={() => setRsvpSent(false)}>Enviar otra respuesta</button>
+              <a
+                className="submit-button gala-shine-btn"
+                href={whatsappRsvpUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Confirmar por WhatsApp
+              </a>
             </div>
-          ) : (
-            <form className="rsvp-form" onSubmit={submitRsvp}>
-              <fieldset className="attendance-field">
-                <legend>¿Podrás acompañarnos?</legend>
-                <div className="confirmation-options">
-                  <label className={attendance === "yes" ? "selected" : ""}>
-                    <input
-                      type="radio"
-                      name="attendance"
-                      value="yes"
-                      checked={attendance === "yes"}
-                      onChange={() => setAttendance("yes")}
-                    />
-                    <Check className="h-5 w-5" aria-hidden="true" />
-                    <span>Sí, allí estaré</span>
-                  </label>
-
-                  <label className={attendance === "no" ? "selected" : ""}>
-                    <input
-                      type="radio"
-                      name="attendance"
-                      value="no"
-                      checked={attendance === "no"}
-                      onChange={() => setAttendance("no")}
-                    />
-                    <X className="h-5 w-5" aria-hidden="true" />
-                    <span>No podré asistir</span>
-                  </label>
-                </div>
-              </fieldset>
-
-              <div className="form-grid">
-                <label>
-                  Nombre completo *
-                  <input name="fullName" required placeholder="Escribe tu nombre" />
-                </label>
-                <label>
-                  Teléfono
-                  <input name="phone" type="tel" placeholder="+57 300 000 0000" />
-                </label>
-                {attendance === "yes" && (
-                  <>
-                    <fieldset className="attendance-field age-field">
-                      <legend>Rango de edad</legend>
-                      <div className="age-options">
-                        <label className={ageRange === "child" ? "selected" : ""}>
-                          <input
-                            type="radio"
-                            name="ageRange"
-                            value="child"
-                            checked={ageRange === "child"}
-                            onChange={() => setAgeRange("child")}
-                          />
-                          <Baby className="h-5 w-5" aria-hidden="true" />
-                          <span>Niño</span>
-                        </label>
-
-                        <label className={ageRange === "young" ? "selected" : ""}>
-                          <input
-                            type="radio"
-                            name="ageRange"
-                            value="young"
-                            checked={ageRange === "young"}
-                            onChange={() => setAgeRange("young")}
-                          />
-                          <User className="h-5 w-5" aria-hidden="true" />
-                          <span>Joven</span>
-                        </label>
-
-                        <label className={ageRange === "adult" ? "selected" : ""}>
-                          <input
-                            type="radio"
-                            name="ageRange"
-                            value="adult"
-                            checked={ageRange === "adult"}
-                            onChange={() => setAgeRange("adult")}
-                          />
-                          <UserPlus className="h-5 w-5" aria-hidden="true" />
-                          <span>Adulto</span>
-                        </label>
-                      </div>
-                    </fieldset>
-
-                    <label className="form-full">
-                      Restricciones alimentarias
-                      <input name="dietary" placeholder="Vegetariano, alergias u otras indicaciones" />
-                    </label>
-                  </>
-                )}
-                <label className="form-full">
-                  Mensaje para la quinceañera
-                  <textarea name="message" rows="4" placeholder="Escribe unas palabras especiales" />
-                </label>
-              </div>
-              {rsvpError && <p className="form-error">{rsvpError}</p>}
-              <button className="submit-button" type="submit" disabled={rsvpSending}>
-                {rsvpSending ? "Enviando..." : "Enviar confirmación"}
-              </button>
-            </form>
-          )}
+          </div>
         </section>
       </main>
 
       <footer className="light-paper-section">
         <div className="footer-overlay light-paper-section" />
         <section>
-          <div className="ornament">
+          <div className="ornament ornament-float">
             <img src={floralOrnament} width={88} height="auto" loading="lazy" alt="" />
           </div>
           <p className="signature">Quince Años</p>
-          <span>11 · 12 · 2026</span>
+          <span>19 · 12 · 2026</span>
         </section>
       </footer>
-    </>
+    </div>
   );
 }

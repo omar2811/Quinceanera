@@ -2,6 +2,14 @@
    browser can discover and fetch them without waiting for this stylesheet. */
 @import "tailwindcss";
 
+@font-face {
+  font-family: "DisneyCustom";
+  src: url("/fonts/waltograph42.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color: #534838;
   background: #f7f3eb;
@@ -148,7 +156,10 @@ button {
 }
 
 .hero-overlay {
-  background: linear-gradient(180deg, rgba(22, 22, 31, .4), rgba(22, 22, 31, .5) 48%, rgba(22, 22, 31, .6));
+  background: radial-gradient(circle at 50% 52%,
+      rgba(4, 12, 32, 0.72) 0%,
+      rgba(4, 12, 32, 0.38) 55%,
+      rgba(4, 12, 32, 0.18) 100%);
   inset: 0;
   position: absolute;
 }
@@ -204,6 +215,7 @@ footer span {
   padding: 32px 0;
   position: relative;
   text-align: center;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
   z-index: 1;
 }
 
@@ -227,14 +239,15 @@ h1 {
   font-size: clamp(72px, 14vw, 120px);
   line-height: .78;
   margin: 0;
-  text-shadow: 0 5px 20px rgba(0, 0, 0, .18);
+  text-shadow: 0 5px 20px rgba(0, 0, 0, .28);
 }
 
 h1 em {
   color: #F5F1E7;
-  font-family: "Lavishly Yours", cursive;
+  font-family: "DisneyCustom", "Berkshire Swash", cursive;
   font-style: normal;
   font-weight: 400;
+  letter-spacing: 0.03em;
 }
 
 .quinceanera-title {
@@ -287,7 +300,7 @@ h1 em {
 
 .scroll-hint svg {
   color: #F5F1E7;
-  width: 20px
+  width: 20px;
 }
 
 .schedule-section,
@@ -315,7 +328,7 @@ h2 {
 
 .signature {
   color: #80652e;
-  font-family: "Lavishly Yours", cursive;
+  font-family: "Great Vibes", "Lavishly Yours", cursive;
   font-size: 45px;
   margin: 34px 0 0;
 }
@@ -471,11 +484,6 @@ h3 {
   transform: translateY(-50%);
   z-index: 2;
 }
-
-/*
-  La mitad de la línea queda
-  a cada lado de la línea central
-*/
 
 .timeline-event.left::before {
   right: -12px;
@@ -762,8 +770,6 @@ h3 {
   clip-path: inset(50%);
 }
 
-/* The radio itself is visually hidden, so show focus on its label instead
-   -- otherwise keyboard users have no way to see which option is focused. */
 .attendance-field label:has(input:focus-visible) {
   outline: 2px solid #4A668C;
   outline-offset: 2px;

@@ -26,7 +26,7 @@ const NOTIFICATION_EMAILS = [
 const SHEET_NAME = "Confirmaciones";
 
 // Branding used in the email.
-const QUINCES_NAMES = "Ana María Quinces";
+const QUINCES_NAMES = "Melissa Guadalupe Gil Arcos Quinces";
 const QUINCES_DATE_LABEL = "11 de diciembre de 2026";
 const TIMEZONE = "America/Bogota";
 

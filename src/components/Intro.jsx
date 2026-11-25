@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-import heroQuinces from "../assets/vid/hero-quinces.mp4";
-import heroQuincesPoster from "../assets/img/hero-quinces-poster.webp";
-
+const heroQuincesPoster = "/img/image.png";
 const quincesLogo = "/img/quinces-logo.webp";
 const invitationCover = "/img/invitation-cover.webp";
 const invitationOpening = "/vid/invitation-opening.mp4";
 
 /**
- * Envelope-opening sequence and hero header. Mounted immediately so a guest
- * always sees something within the first paint; everything past this point
- * (galleries, maps, RSVP) lives in <Invitation> and only loads once the
- * envelope has been opened.
+- Envelope-opening sequence and hero header. Mounted immediately so a guest
+- always sees something within the first paint; everything past this point
+- (galleries, maps, RSVP) lives in <Invitation> and only loads once the
+- envelope has been opened.
  */
 export function Intro({ onEnvelopeOpen }) {
   const [invitationOpen, setInvitationOpen] = useState(false);
@@ -99,7 +97,11 @@ export function Intro({ onEnvelopeOpen }) {
           }
         }}
       >
-        <img className={`intro-media intro-poster ${introVisible ? "hidden" : ""}`} src={invitationCover} alt="" />
+        <img
+          className={`intro-media intro-poster ${introVisible ? "hidden" : ""}`}
+          src={invitationCover}
+          alt=""
+        />
         <video
           className={`intro-media intro-video ${introVisible ? "visible" : ""}`}
           ref={introVideo}
@@ -117,18 +119,12 @@ export function Intro({ onEnvelopeOpen }) {
       </section>
 
       <header className="hero" id="inicio">
-        <video
+        <img
           className="hero-video"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="none"
+          src={heroQuincesPoster}
+          alt=""
           aria-hidden="true"
-          poster={heroQuincesPoster}
-        >
-          <source src={heroQuinces} type="video/mp4" />
-        </video>
+        />
 
         <nav className="navbar">
           <a className="brand" href="#inicio">
@@ -141,16 +137,33 @@ export function Intro({ onEnvelopeOpen }) {
           </div>
         </nav>
 
-        <div className="hero-overlay" />
-        <div className="hero-content">
-          <h1><em className="quinceanera-title">
-            <span>Ana María</span>
-          </em></h1>
-          <p className="hero-date">11 · 12 · 2026</p>
-          <a className="outline-button" href="#bienvenida">Descubre los detalles</a>
+        <div
+          className="hero-overlay"
+          style={{
+            background:
+              "radial-gradient(circle at 50% 52%, rgba(4, 12, 32, 0.72) 0%, rgba(4, 12, 32, 0.38) 55%, rgba(4, 12, 32, 0.18) 100%)",
+          }}
+        />
+        <div
+          className="hero-content"
+          style={{
+            textShadow: "0 2px 14px rgba(0, 0, 0, 0.85)",
+          }}
+        >
+          <h1>
+            <em className="quinceanera-title">
+              <span>Melissa</span>
+            </em>
+          </h1>
+          <p className="hero-date">19 · 12 · 2026</p>
+          <a className="outline-button" href="#bienvenida">
+            Descubre los detalles
+          </a>
         </div>
         <a className="scroll-hint" href="#bienvenida" aria-label="Continuar">
-          <b><ChevronDown aria-hidden="true" /></b>
+          <b>
+            <ChevronDown aria-hidden="true" />
+          </b>
         </a>
       </header>
     </>

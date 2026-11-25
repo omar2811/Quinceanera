@@ -1,6 +1,6 @@
 # Invitacion Web de Quinceañera
 
-Landing page en React para una invitacion digital de quinceañera. Incluye una introduccion animada, informacion del evento, cuenta regresiva, galeria, mapa embebido y formulario de confirmacion de asistencia. La invitación y su contenido han sido personalizados para los 15 años de Ana María Mena Pérez.
+Landing page en React para una invitacion digital de quinceañera. Incluye una introduccion animada, informacion del evento, cuenta regresiva, galeria, mapa embebido y formulario de confirmacion de asistencia. La invitación y su contenido han sido personalizados para los 15 años de Melissa Guadalupe Gil Arcos Mena Pérez.
 
 ## Tecnologias
 
